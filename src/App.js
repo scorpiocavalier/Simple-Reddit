@@ -4,7 +4,7 @@ import styled from 'styled-components'
 export default () => {
   const [ input, setInput ] = useState( '' )
 
-  const [ results, setResults ] = useState( [ { data: { title: 'Enter a reddit' } } ] )
+  const [ results, setResults ] = useState( [ { data: { title: 'Enter a reddit handle' } } ] )
 
   const handleChange = ( e ) => {
     setInput( e.target.value )
