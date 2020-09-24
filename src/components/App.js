@@ -1,12 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+
+import { getPosts, setPosts } from '../redux/actions/posts'
+import { PostResult } from './PostResult'
 
 export default () => {
   const [ input, setInput ] = useState( '' )
-
-  const [ results, setResults ] = useState( [ { data: { title: 'Enter a reddit handle' } } ] )
+  const posts = useSelector( state => state.posts.posts )
+  const dispatch = useDispatch()
 
   const handleChange = ( e ) => {
+    console.count( 'count' )
     setInput( e.target.value )
   }
 
@@ -16,27 +21,33 @@ export default () => {
     const uri = `https://www.reddit.com/r/${ input }.json?limit=${ postsPerRequest }`
     const res = await fetch( uri )
     const data = await res.json()
-    console.log('data.data', data.data)
-    setResults( data.data.children )
+    dispatch( setPosts( data.data.children ) )
   }
+
+  useEffect( () => {
+    dispatch( getPosts )
+  }, [ dispatch ] )
 
   return (
     <MainWrapper>
       <h1>Reddit</h1>
-      <form>
+      <Form>
         <Input
           type="text"
           value={ input }
           onChange={ e => handleChange( e ) }
         />
         <SearchBtn onClick={ e => handleSearch( e ) }>Search</SearchBtn>
-      </form>
+      </Form>
 
-      <Results>
-        { results.map( ( result, index ) => (
-          <Result key={ index }>{ result.data.title }</Result>
-        ) ) }
-      </Results>
+      <Posts>
+        { posts.length > 0
+          ? posts.map( ( post, index ) => (
+            <PostResult key={ index } post={ post } />
+          ) )
+          : <p>No posts available.</p>
+        }
+      </Posts>
     </MainWrapper>
   )
 }
@@ -45,32 +56,38 @@ const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  background: #dae0e6;
+  min-height: 100vh;
+`
+
+const Form = styled.form`
+  display: flex;
+  align-items: center;
+  height: 2rem;
 `
 
 const Input = styled.input`
   height: 100%;
+  padding: 0 8px;
+  font-size: 1.1rem;
 `
 
 const SearchBtn = styled.button`
-  margin-left: 10px;
-  background: #cee3f8;
-  color: black;
+  height: 100%;
+  margin-left: 15px;
+  padding: 0 15px;
+  background: #0079d3;
+  color: white;
   border: none;
-  padding: 5px 10px;
   border-radius: 5px;
 
   &:hover {
-    background: #ff4500;
-    color: white;
+    background: #7fbce9;
   }
 `
 
-const Results = styled.ul`
+const Posts = styled.ul`
   list-style-type: none;
   padding: 0;
-`
-
-const Result = styled.li`
-  padding: 10px 0;
 `

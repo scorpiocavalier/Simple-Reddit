@@ -1,1 +1,0 @@
-export const ADD_REDDIT_RESULTS = 'ADD_REDDIT_RESULTS'
