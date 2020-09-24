@@ -16,6 +16,7 @@ export default () => {
     const uri = `https://www.reddit.com/r/${ input }.json?limit=${ postsPerRequest }`
     const res = await fetch( uri )
     const data = await res.json()
+    console.log('data.data', data.data)
     setResults( data.data.children )
   }
 
