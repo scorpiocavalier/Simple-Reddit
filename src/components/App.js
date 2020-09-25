@@ -2,26 +2,39 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
-import { getPosts, setPosts } from '../redux/actions/posts'
+import { getPosts, setPosts, savePosts, loadPosts } from '../redux/actions/posts'
 import { PostResult } from './PostResult'
 
 export default () => {
   const [ input, setInput ] = useState( '' )
-  const posts = useSelector( state => state.posts.posts )
+  const posts = useSelector( state => {
+    console.log('state', state)
+    return state.posts.posts
+  } )
+
   const dispatch = useDispatch()
 
   const handleChange = ( e ) => {
-    console.count( 'count' )
     setInput( e.target.value )
   }
 
-  const handleSearch = async e => {
+  const onSearch = async e => {
     e.preventDefault()
     const postsPerRequest = 25
     const uri = `https://www.reddit.com/r/${ input }.json?limit=${ postsPerRequest }`
     const res = await fetch( uri )
     const data = await res.json()
     dispatch( setPosts( data.data.children ) )
+  }
+
+  const onSave = e => {
+    e.preventDefault()
+    dispatch( savePosts( posts ) )
+  }
+
+  const onLoad = e => {
+    e.preventDefault()
+    dispatch( loadPosts() )
   }
 
   useEffect( () => {
@@ -37,7 +50,9 @@ export default () => {
           value={ input }
           onChange={ e => handleChange( e ) }
         />
-        <SearchBtn onClick={ e => handleSearch( e ) }>Search</SearchBtn>
+        <SearchBtn onClick={ e => onSearch( e ) }>Search</SearchBtn>
+        <SaveBtn onClick={ e => onSave( e ) }>Save</SaveBtn>
+        <LoadBtn onClick={ e => onLoad( e ) }>Load</LoadBtn>
       </Form>
 
       <Posts>
@@ -73,7 +88,7 @@ const Input = styled.input`
   font-size: 1.1rem;
 `
 
-const SearchBtn = styled.button`
+const Btn = styled.button`
   height: 100%;
   margin-left: 15px;
   padding: 0 15px;
@@ -81,9 +96,23 @@ const SearchBtn = styled.button`
   color: white;
   border: none;
   border-radius: 5px;
+`
 
+const SearchBtn = styled(Btn)`
   &:hover {
-    background: #7fbce9;
+    background: #008cf4;
+  }
+`
+
+const SaveBtn = styled(Btn)`
+  &:hover {
+    background: #67bb6b;
+  }
+`
+
+const LoadBtn = styled(Btn)`
+  &:hover {
+    background: #ff6a33;
   }
 `
 

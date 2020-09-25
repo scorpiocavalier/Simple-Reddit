@@ -10,3 +10,16 @@ export const setPosts = ( posts ) => {
     payload: posts
   }
 }
+
+export const loadPosts = () => {
+  return {
+    type: type.LOAD_POSTS
+  }
+}
+
+export const savePosts = (posts) => {
+  return {
+    type: type.SAVE_POSTS,
+    payload: posts
+  }
+}
