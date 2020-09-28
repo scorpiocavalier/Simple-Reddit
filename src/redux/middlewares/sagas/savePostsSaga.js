@@ -3,7 +3,7 @@ import { postPosts } from '../../api'
 import { SAVE_POSTS } from '../../types'
 
 export function* savePostsWatcher () {
-  yield takeLatest( SAVE_POSTS, savePostsFlow )
+  yield takeLatest(SAVE_POSTS, savePostsFlow)
 }
 
 function* savePostsFlow (action) {

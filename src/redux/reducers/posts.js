@@ -5,8 +5,8 @@ const initialState = {
   latestPosts: [],
 }
 
-export default ( state = initialState, action ) => {
-  switch ( action.type ) {
+export default (state = initialState, action) => {
+  switch (action.type) {
     case type.GET_POSTS:
       return { ...state }
     case type.SET_POSTS:

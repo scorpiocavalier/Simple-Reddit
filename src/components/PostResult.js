@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export const PostResult = ( props ) => {
+export const PostResult = (props) => {
   const { url, author, title, ups } = props.post.data
-  console.log( 'props.post', props.post )
+  console.log('props.post', props.post)
 
   return (
-    <MainWrapper onClick={ () => window.open( url, '_blank' ) }>
+    <MainWrapper onClick={ () => window.open(url, '_blank') }>
       <UpsWrapper>{ ups }</UpsWrapper>
       <Post>
         <Author>Posted by { author }</Author>

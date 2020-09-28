@@ -6,40 +6,40 @@ import { getPosts, setPosts, savePosts, loadPosts } from '../redux/actions/posts
 import { PostResult } from './PostResult'
 
 export default () => {
-  const [ input, setInput ] = useState( '' )
-  const posts = useSelector( state => {
+  const [ input, setInput ] = useState('')
+  const posts = useSelector(state => {
     console.log('state', state)
     return state.posts.posts
-  } )
+  })
 
   const dispatch = useDispatch()
 
-  const handleChange = ( e ) => {
-    setInput( e.target.value )
+  const handleChange = (e) => {
+    setInput(e.target.value)
   }
 
   const onSearch = async e => {
     e.preventDefault()
     const postsPerRequest = 25
     const uri = `https://www.reddit.com/r/${ input }.json?limit=${ postsPerRequest }`
-    const res = await fetch( uri )
+    const res = await fetch(uri)
     const data = await res.json()
-    dispatch( setPosts( data.data.children ) )
+    dispatch(setPosts(data.data.children))
   }
 
   const onSave = e => {
     e.preventDefault()
-    dispatch( savePosts( posts ) )
+    dispatch(savePosts(posts))
   }
 
   const onLoad = e => {
     e.preventDefault()
-    dispatch( loadPosts() )
+    dispatch(loadPosts())
   }
 
-  useEffect( () => {
-    dispatch( getPosts )
-  }, [ dispatch ] )
+  useEffect(() => {
+    dispatch(getPosts)
+  }, [ dispatch ])
 
   return (
     <MainWrapper>
@@ -48,18 +48,18 @@ export default () => {
         <Input
           type="text"
           value={ input }
-          onChange={ e => handleChange( e ) }
+          onChange={ e => handleChange(e) }
         />
-        <SearchBtn onClick={ e => onSearch( e ) }>Search</SearchBtn>
-        <SaveBtn onClick={ e => onSave( e ) }>Save</SaveBtn>
-        <LoadBtn onClick={ e => onLoad( e ) }>Load</LoadBtn>
+        <SearchBtn onClick={ e => onSearch(e) }>Search</SearchBtn>
+        <SaveBtn onClick={ e => onSave(e) }>Save</SaveBtn>
+        <LoadBtn onClick={ e => onLoad(e) }>Load</LoadBtn>
       </Form>
 
       <Posts>
         { posts.length > 0
-          ? posts.map( ( post, index ) => (
+          ? posts.map((post, index) => (
             <PostResult key={ index } post={ post } />
-          ) )
+          ))
           : <p>No posts available.</p>
         }
       </Posts>

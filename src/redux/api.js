@@ -3,7 +3,7 @@ export const getPosts = async () => {
 }
 
 export const postPosts = async (posts) => {
-  return fetch( "http://localhost:3000", {
+  return fetch("http://localhost:3000", {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
