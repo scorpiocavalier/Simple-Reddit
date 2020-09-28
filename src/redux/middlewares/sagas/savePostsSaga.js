@@ -1,11 +1,11 @@
-import { call, takeLatest } from 'redux-saga/effects'
-import { postPosts } from '../../api'
+import { put, takeLatest } from 'redux-saga/effects'
+
 import { SAVE_POSTS } from '../../types'
 
-export function* savePostsWatcher () {
-  yield takeLatest(SAVE_POSTS, savePostsFlow)
+export function* watchSavePosts () {
+  yield takeLatest(SAVE_POSTS, savePosts)
 }
 
-function* savePostsFlow (action) {
-  yield call(postPosts, action.payload)
+export function* savePosts (posts) {
+  yield put({ type: SAVE_POSTS, payload: posts })
 }

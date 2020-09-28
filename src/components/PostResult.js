@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 export const PostResult = (props) => {
   const { url, author, title, ups } = props.post.data
-  console.log('props.post', props.post)
 
   return (
     <MainWrapper onClick={ () => window.open(url, '_blank') }>
@@ -20,7 +19,7 @@ const MainWrapper = styled.div`
   display: flex;
   margin: 15px auto;
   width: 70vw;
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   border-radius: 10px;
   font-size: 1.1rem;
 
@@ -32,14 +31,15 @@ const MainWrapper = styled.div`
 const UpsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding: 10px;
   width: 30px;
-  background: #dadbdc;
-  `
+  background: #0079d3;
+  color: white;
+`
 
 const Post = styled.div`
   display: flex;

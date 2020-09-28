@@ -1,8 +1,8 @@
 import { fork } from 'redux-saga/effects'
-import { loadPostsWatcher } from './loadPostsSaga'
-import { savePostsWatcher } from './savePostsSaga'
+import { watchLoadPosts } from './loadPostsSaga'
+import { watchSavePosts } from './savePostsSaga'
 
 export function* rootSaga () {
-  yield fork(loadPostsWatcher)
-  yield fork(savePostsWatcher)
+  yield fork(watchLoadPosts)
+  yield fork(watchSavePosts)
 }

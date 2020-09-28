@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
-import { getPosts, setPosts, savePosts, loadPosts } from '../redux/actions/posts'
+import { setPosts, savePosts, loadPosts } from '../redux/actions/posts'
 import { PostResult } from './PostResult'
 
 export default () => {
   const [ input, setInput ] = useState('')
+
   const posts = useSelector(state => {
     console.log('state', state)
     return state.posts.posts
@@ -37,10 +38,6 @@ export default () => {
     dispatch(loadPosts())
   }
 
-  useEffect(() => {
-    dispatch(getPosts)
-  }, [ dispatch ])
-
   return (
     <MainWrapper>
       <h1>Reddit</h1>
@@ -49,6 +46,7 @@ export default () => {
           type="text"
           value={ input }
           onChange={ e => handleChange(e) }
+          placeholder="Search posts about..."
         />
         <SearchBtn onClick={ e => onSearch(e) }>Search</SearchBtn>
         <SaveBtn onClick={ e => onSave(e) }>Save</SaveBtn>
@@ -60,7 +58,7 @@ export default () => {
           ? posts.map((post, index) => (
             <PostResult key={ index } post={ post } />
           ))
-          : <p>No posts available.</p>
+          : <p>No posts available. Try a new search.</p>
         }
       </Posts>
     </MainWrapper>
